@@ -1,0 +1,9 @@
+.git
+.env*
+**/node_modules
+**/data
+**/*.sqlite*
+backend/test
+mediamtx/certs
+caddy/data
+caddy/config

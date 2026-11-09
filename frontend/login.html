@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#10101d">
+    <title>Sign in | Front Camera</title>
+    <link rel="stylesheet" href="/assets/styles.css">
+    <script src="/assets/login.js" defer></script>
+  </head>
+  <body class="login-page">
+    <main class="login-layout">
+      <section class="login-intro" aria-labelledby="login-title">
+        <a class="wordmark" href="/login" aria-label="Front Camera home">
+          <span class="wordmark-mark" aria-hidden="true"></span>
+          <span>PRIVATE CAMERA</span>
+        </a>
+        <div class="login-copy">
+          <p class="eyebrow">Secure access · front camera</p>
+          <h1 id="login-title">Your camera,<br>within reach.</h1>
+          <p class="muted-copy">Sign in to check the live connection and view your private stream.</p>
+        </div>
+        <p class="login-footnote">ENCRYPTED SESSION <span>·</span> AUTHORIZED VIEWERS ONLY</p>
+      </section>
+
+      <section class="login-form-panel" aria-label="Administrator sign in">
+        <div class="panel-kicker"><span class="live-dot"></span> PRIVATE ACCESS</div>
+        <h2>Sign in</h2>
+        <p class="form-caption">Use your administrator account to continue.</p>
+        <form id="login-form" autocomplete="on">
+          <label for="username">Username</label>
+          <input id="username" name="username" type="text" autocomplete="username" required maxlength="64" autofocus>
+          <label for="password">Password</label>
+          <input id="password" name="password" type="password" autocomplete="current-password" required maxlength="256">
+          <p id="login-error" class="form-error" role="alert" hidden></p>
+          <button class="button button-primary login-submit" type="submit">
+            <span>Continue</span><span aria-hidden="true">↗</span>
+          </button>
+        </form>
+        <p class="login-note">Access is monitored and protected by a secure session.</p>
+      </section>
+    </main>
+  </body>
+</html>

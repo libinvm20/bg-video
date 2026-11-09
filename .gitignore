@@ -1,0 +1,8 @@
+.env
+backend/node_modules/
+backend/data/
+data/
+caddy/data/
+caddy/config/
+mediamtx/certs/*
+!mediamtx/certs/.gitkeep

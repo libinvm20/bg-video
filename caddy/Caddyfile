@@ -1,0 +1,20 @@
+{
+	admin 127.0.0.1:2019
+}
+
+{$DOMAIN} {
+	encode zstd gzip
+	header {
+		X-Robots-Tag "noindex, nofollow"
+		X-Content-Type-Options "nosniff"
+		Referrer-Policy "same-origin"
+		Permissions-Policy "camera=(), microphone=(), geolocation=()"
+	}
+
+	@internal path /internal/* /_health
+	respond @internal 404
+
+	@whep path /front/whep /front/whep/*
+	reverse_proxy @whep mediamtx:8889
+	reverse_proxy backend:3000
+}

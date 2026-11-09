@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#10101d">
+    <title>Live view | Front Camera</title>
+    <link rel="stylesheet" href="/assets/styles.css">
+    <script src="/assets/live.js" defer></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="wordmark" href="/" aria-label="Front Camera overview">
+          <span class="wordmark-mark" aria-hidden="true"></span>
+          <span>PRIVATE CAMERA</span>
+        </a>
+        <nav class="main-nav" aria-label="Main navigation">
+          <a class="nav-link" href="/">Overview</a>
+          <a class="nav-link is-active" href="/live" aria-current="page">Live view <span aria-hidden="true">↗</span></a>
+        </nav>
+        <div class="account-tools">
+          <span id="account-name" class="account-name">Administrator</span>
+          <button id="logout-button" class="button button-quiet" type="button" title="Sign out">Sign out</button>
+        </div>
+      </header>
+
+      <main class="page-content live-page">
+        <div class="page-heading live-heading">
+          <div>
+            <p class="eyebrow">LIVE STREAM <span class="heading-rule"></span> SECURE WEBRTC</p>
+            <h1>Front Camera <span class="secondary-title">(Selfie Camera)</span></h1>
+            <p class="page-subtitle">Private live view · H.264</p>
+          </div>
+          <div class="live-state-wrap"><span id="live-state-dot" class="live-dot is-idle" aria-hidden="true"></span><span id="live-state">Playback stopped</span></div>
+        </div>
+
+        <section class="player-shell" aria-label="Front camera live video">
+          <div id="video-stage" class="video-stage" data-state="idle">
+            <video id="camera-video" playsinline autoplay muted></video>
+            <div id="video-overlay" class="video-overlay">
+              <span id="overlay-spinner" class="loading-spinner" hidden aria-hidden="true"></span>
+              <p id="overlay-title">Playback stopped</p>
+              <p id="overlay-detail">Start playback to connect to the front camera.</p>
+            </div>
+            <button id="tap-to-play" class="tap-to-play" type="button" hidden>Tap to play</button>
+            <div class="video-corner-label"><span class="corner-dot"></span> FRONT / LIVE</div>
+          </div>
+          <div class="player-controls">
+            <div class="control-group">
+              <button id="start-button" class="button button-primary" type="button"><span class="play-icon" aria-hidden="true">▶</span> Start playback</button>
+              <button id="stop-button" class="button button-outline" type="button" disabled><span class="stop-icon" aria-hidden="true"></span> Stop</button>
+            </div>
+            <div class="control-group secondary-controls">
+              <button id="audio-button" class="button button-icon" type="button" title="Unmute video" aria-label="Unmute video" disabled><span id="audio-icon" aria-hidden="true">◖</span></button>
+              <button id="fullscreen-button" class="button button-icon" type="button" title="Enter fullscreen" aria-label="Enter fullscreen"><span aria-hidden="true">⛶</span></button>
+            </div>
+          </div>
+        </section>
+        <p id="player-error" class="inline-error" role="alert" hidden></p>
+        <p class="privacy-note"><span class="privacy-mark" aria-hidden="true">◇</span> Viewer access is temporary and restricted to this camera stream.</p>
+      </main>
+      <footer class="app-footer"><span>PRIVATE CAMERA SYSTEM</span><a href="/">Back to overview</a></footer>
+    </div>
+  </body>
+</html>

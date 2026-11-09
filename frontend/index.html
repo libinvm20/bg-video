@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#10101d">
+    <title>Overview | Front Camera</title>
+    <link rel="stylesheet" href="/assets/styles.css">
+    <script src="/assets/dashboard.js" defer></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="wordmark" href="/" aria-label="Front Camera overview">
+          <span class="wordmark-mark" aria-hidden="true"></span>
+          <span>PRIVATE CAMERA</span>
+        </a>
+        <nav class="main-nav" aria-label="Main navigation">
+          <a class="nav-link is-active" href="/" aria-current="page">Overview</a>
+          <a class="nav-link" href="/live">Live view <span aria-hidden="true">↗</span></a>
+        </nav>
+        <div class="account-tools">
+          <span id="account-name" class="account-name">Administrator</span>
+          <button id="logout-button" class="button button-quiet" type="button" title="Sign out">Sign out</button>
+        </div>
+      </header>
+
+      <main class="page-content">
+        <div class="page-heading">
+          <div>
+            <p class="eyebrow">SYSTEM OVERVIEW <span class="heading-rule"></span> <span id="updated-at">Updating</span></p>
+            <h1>Camera status</h1>
+            <p class="page-subtitle">A live view of your private streaming server.</p>
+          </div>
+          <a class="button button-primary" href="/live"><span class="button-pulse" aria-hidden="true"></span> Open live view</a>
+        </div>
+
+        <section class="status-banner" aria-label="Current camera state">
+          <div class="status-main">
+            <span id="camera-indicator" class="status-orb is-unknown" aria-hidden="true"></span>
+            <div>
+              <p id="camera-state-label" class="status-label">Checking camera</p>
+              <h2>Front Camera <span class="secondary-title">(Selfie Camera)</span></h2>
+            </div>
+          </div>
+          <div class="status-banner-meta">
+            <span id="connection-label">Checking connection</span>
+            <span class="meta-separator" aria-hidden="true"></span>
+            <span>STREAM <strong>/front</strong></span>
+          </div>
+        </section>
+
+        <section class="metric-grid" aria-label="Camera metrics">
+          <article class="metric-panel metric-primary">
+            <p class="metric-label">STREAM UPTIME</p>
+            <p id="stream-uptime" class="metric-value">--</p>
+            <p class="metric-detail">Current publisher session</p>
+          </article>
+          <article class="metric-panel">
+            <p class="metric-label">ACTIVE VIEWERS</p>
+            <p id="active-viewers" class="metric-value">--</p>
+            <p class="metric-detail">Authorized WebRTC readers</p>
+          </article>
+          <article class="metric-panel">
+            <p class="metric-label">SERVER CPU</p>
+            <p id="cpu-usage" class="metric-value">--</p>
+            <p class="metric-detail">Backend container utilization</p>
+          </article>
+          <article class="metric-panel">
+            <p class="metric-label">MEMORY</p>
+            <p id="memory-usage" class="metric-value">--</p>
+            <p class="metric-detail">Backend container memory</p>
+          </article>
+        </section>
+
+        <section class="lower-grid" aria-label="Server details">
+          <div class="detail-section">
+            <div class="section-heading">
+              <div><p class="eyebrow">CONNECTIVITY</p><h2>Publisher</h2></div>
+              <span id="server-state" class="small-state">Checking</span>
+            </div>
+            <dl class="detail-list">
+              <div><dt>Last connection</dt><dd id="last-connection">Never recorded</dd></div>
+              <div><dt>Server uptime</dt><dd id="server-uptime">--</dd></div>
+              <div><dt>Media service</dt><dd id="media-health">Checking</dd></div>
+            </dl>
+          </div>
+          <div class="detail-section network-section">
+            <div class="section-heading">
+              <div><p class="eyebrow">NETWORK TRAFFIC</p><h2>Backend container</h2></div>
+              <span class="network-mark" aria-hidden="true">↕</span>
+            </div>
+            <div class="traffic-row">
+              <div><span class="traffic-arrow receive" aria-hidden="true">↓</span><span>Received</span></div>
+              <strong id="network-receive">--</strong>
+            </div>
+            <div class="traffic-row">
+              <div><span class="traffic-arrow send" aria-hidden="true">↑</span><span>Sent</span></div>
+              <strong id="network-send">--</strong>
+            </div>
+          </div>
+        </section>
+        <p id="dashboard-error" class="inline-error" role="status" hidden></p>
+      </main>
+      <footer class="app-footer"><span>PRIVATE CAMERA SYSTEM</span><span id="session-expiry">Secure session</span></footer>
+    </div>
+  </body>
+</html>

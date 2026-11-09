@@ -1,0 +1,32 @@
+logLevel: info
+logDestinations: [stdout]
+
+authMethod: http
+authHTTPAddress: http://backend:3000/internal/mediamtx/auth
+
+api: true
+apiAddress: :9997
+metrics: false
+pprof: false
+
+rtsp: true
+rtspTransports: [tcp]
+rtspEncryption: strict
+rtspsAddress: :8322
+rtspServerKey: /certs/server.key
+rtspServerCert: /certs/server.crt
+rtspAuthMethods: [basic]
+
+webrtc: true
+webrtcAddress: :8889
+webrtcEncryption: false
+webrtcAllowOrigins: ["https://camera.example.com"]
+webrtcLocalUDPAddress: :8189
+webrtcLocalTCPAddress: ""
+webrtcIPsFromInterfaces: false
+webrtcAdditionalHosts: []
+webrtcICEServers2:
+  - url: stun:stun.l.google.com:19302
+
+paths:
+  front: {}

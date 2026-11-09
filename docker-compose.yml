@@ -1,0 +1,103 @@
+services:
+  backend:
+    image: legendyt4k/bg-video:latest
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      DB_PATH: /data/camera.sqlite
+      DOMAIN: ${DOMAIN:?Set DOMAIN in .env}
+      ADMIN_USERNAME: ${ADMIN_USERNAME:?Set ADMIN_USERNAME in .env}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:?Set ADMIN_PASSWORD in .env}
+      CAMERA_PUBLISH_PASSWORD: ${CAMERA_PUBLISH_PASSWORD:?Set CAMERA_PUBLISH_PASSWORD in .env}
+      MEDIAMTX_API_USER: mediamtx-api
+      MEDIAMTX_API_PASSWORD: ${MEDIAMTX_API_PASSWORD:?Set MEDIAMTX_API_PASSWORD in .env}
+      MEDIAMTX_API_URL: http://mediamtx:9997
+      SESSION_TTL_HOURS: ${SESSION_TTL_HOURS:-12}
+      VIEW_TOKEN_TTL_SECONDS: ${VIEW_TOKEN_TTL_SECONDS:-3600}
+    volumes:
+      - camera_data:/data
+    expose:
+      - "3000"
+    depends_on:
+      mediamtx:
+        condition: service_started
+    networks:
+      - app
+      - stream
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/_health').then((r) => process.exit(r.ok ? 0 : 1)).catch(() => process.exit(1))"]
+      interval: 20s
+      timeout: 5s
+      start_period: 30s
+      retries: 3
+
+  mediamtx:
+    image: bluenviron/mediamtx:1.21.3
+    restart: unless-stopped
+    environment:
+      MTX_WEBRTCADDITIONALHOSTS: ${DOMAIN:?Set DOMAIN in .env}
+      MTX_WEBRTCALLOWORIGINS: https://${DOMAIN:?Set DOMAIN in .env}
+      MTX_WEBRTCICESERVERS2_0_URL: ${WEBRTC_ICE_URL:-stun:stun.l.google.com:19302}
+      MTX_WEBRTCICESERVERS2_0_USERNAME: ${WEBRTC_ICE_USERNAME:-}
+      MTX_WEBRTCICESERVERS2_0_PASSWORD: ${WEBRTC_ICE_PASSWORD:-}
+    volumes:
+      - ./mediamtx/mediamtx.yml:/mediamtx.yml:ro
+      - ./mediamtx/certs:/certs:ro
+    ports:
+      - "8322:8322/tcp"
+      - "8189:8189/udp"
+    expose:
+      - "8889"
+      - "9997"
+    networks:
+      - edge
+      - stream
+    healthcheck:
+      test: ["CMD", "/mediamtx", "--version"]
+      interval: 30s
+      timeout: 5s
+      start_period: 10s
+      retries: 3
+
+  caddy:
+    image: caddy:2.10.2-alpine
+    restart: unless-stopped
+    environment:
+      DOMAIN: ${DOMAIN:?Set DOMAIN in .env}
+    ports:
+      - "80:80/tcp"
+      - "443:443/tcp"
+      - "443:443/udp"
+    volumes:
+      - ./caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      backend:
+        condition: service_healthy
+      mediamtx:
+        condition: service_started
+    networks:
+      - app
+      - edge
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:2019/config/ >/dev/null || exit 1"]
+      interval: 30s
+      timeout: 5s
+      start_period: 10s
+      retries: 3
+
+volumes:
+  camera_data:
+  caddy_data:
+  caddy_config:
+
+networks:
+  app:
+  edge:
+  stream:
+    internal: true

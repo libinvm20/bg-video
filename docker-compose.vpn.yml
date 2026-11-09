@@ -1,0 +1,6 @@
+services:
+  mediamtx:
+    environment:
+      MTX_RTSPENCRYPTION: "no"
+    ports:
+      - "${VPN_SERVER_IP:?Set VPN_SERVER_IP to the server's WireGuard address}:8554:8554/tcp"
